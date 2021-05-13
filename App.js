@@ -1,39 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+import Header from './components/Header'; 
 
 export default function App() {
 
-    const [people, setPeople] = useState([
-        { name: 'Shubham', id: '1' },
-        { name: 'Elon', id: '2' },
-        { name: 'Alastair', id: '3' },
-        { name: 'Doge', id: '4' },
-        { name: 'Malan', id: '5' },
-        { name: 'Nortje', id: '6' },
-        { name: 'Smith', id: '7' },
-    ]);
-
-    const pressHandler = (id) => {
-        console.log(id);
-        setPeople((prevPeople) => {
-            return prevPeople.filter(person => person.id != id)
-        })
-    }
+    const [todos, setTodos] = useState([
+        { text: 'Buy a Coffee', key: '1' },
+        { text: 'Develop an App', key: '2' },
+        { text: 'Deploy the Old Project', key: '3' }
+    ])
 
     return (
         <View style={styles.container}>
+            
+            <Header />
+            
+            <View style={styles.content}>
+                {/* ToDo Form */}
 
-            <FlatList 
-                numColumns={2}
-                keyExtractor={(item) => item.id}
-                data={people}
-                renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => pressHandler(item.id)}>
-                        <Text style={styles.item}>{item.name}</Text>
-                    </TouchableOpacity>
-                )}
-            />
+                <View style={styles.list}>
+                    <FlatList 
+                        data={todos}
+                        renderItem={({ item }) => (
+                            <Text>{item.text}</Text>
+                        )}
+                    />
+                </View>
+            </View>
 
             <StatusBar style="auto" />
         </View>
@@ -43,18 +37,12 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        paddingTop: 40,
-        paddingHorizontal: 20
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        backgroundColor: '#fff'
     },
-    item: {
-        marginTop: 24,
-        padding: 30,
-        fontSize: 24,
-        backgroundColor: 'pink',
-        marginHorizontal: 10,
-        marginTop: 24
+    content: {
+        padding: 40
+    },
+    list: {
+        marginTop: 20
     }
 });
